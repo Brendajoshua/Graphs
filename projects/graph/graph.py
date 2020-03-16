@@ -110,8 +110,7 @@ class Graph:
         # Create an empty queue
         q = Queue()
         # Add a PATH to the starting vertex_id to the queue
-        q.enqueue((starting_vertex,))
-        print(q.queue)
+        q.enqueue([starting_vertex])
         # Create an empty set to store visited nodes
         visited = set()
         # While the queue is not empty...
@@ -123,18 +122,18 @@ class Graph:
             # *** Check if it's the target
                 # if so, return the path
             if last_vertex == destination_vertex:
-                return list(p)
+                return p
             # Check if it's been visited
             # If it has not been visited...
-            if p not in visited:
+            if last_vertex not in visited:
                 # Mark it as visited
-                visited.add(p)
+                visited.add(last_vertex)
                 # Then add a PATH to all neighbors to the back of the queue
                     # (make a copy of the path before adding)
                 for neighbor in self.get_neighbors(last_vertex):
-                    p_copy = list(p)
+                    p_copy = p.copy()
                     p_copy.append(neighbor)
-                    q.enqueue(tuple(p_copy))
+                    q.enqueue(p_copy)
 
     def dfs(self, starting_vertex, destination_vertex):
         """
@@ -142,9 +141,35 @@ class Graph:
         starting_vertex to destination_vertex in
         depth-first order.
         """
-        pass  # TODO
+        print("\n\ndfs")
+        # create empty stack
+        s = Stack()
+        # push path to the starting vertex_id to the stack
+        s.push([starting_vertex])
+        # create an empty set to store visited nodes
+        visited = set()
+        # while the stack is not empty...
+        while s.size() > 0:
+            # pop the first path
+            p = s.pop()
+            # grab the last vertex from path
+            last_vertex = p[-1]
+            # check if the last vertex matches the target
+            if last_vertex == destination_vertex:
+                # if so, return the path to the target
+                return p
+            # check if it's been visited
+            # if it has not been visited
+            if last_vertex not in visited:
+                # mark it as visited
+                visited.add(last_vertex)
+                # then push paths to all neighbors to the top
+                for neighbor in self.get_neighbors(last_vertex):
+                    p_copy = p.p_copy()
+                    p_copy.append(neighbor)
+                    s.push(p_copy)
 
-    def dfs_recursive(self, starting_vertex, destination_vertex):
+    def dfs_recursive(self, starting_vertex, destination_vertex, visited=set()):
         """
         Return a list containing a path from
         starting_vertex to destination_vertex in
@@ -152,7 +177,7 @@ class Graph:
 
         This should be done using recursion.
         """
-        pass  # TODO
+        #
 
 if __name__ == '__main__':
     graph = Graph()  # Instantiate your graph
