@@ -20,7 +20,7 @@ class Graph:
         Add a directed edge to the graph.
         """
         if v1 in self.vertices and v2 in self.vertices:
-            self.vertices[v1].add[v2]
+            self.vertices[v1].add(v2)
         else:
             raise IndexError("That vertex does not exist")
 
@@ -54,7 +54,7 @@ class Graph:
                 visited.add(v)
                 # then add all neighbors to the back of the queue
                 for neighbor in self.get_neighbors(v):
-                    q.enqueue(neighbour)
+                    q.enqueue(neighbor)
 
     def dft(self, starting_vertex):
         """
@@ -62,7 +62,7 @@ class Graph:
         beginning from starting_vertex.
         """
         # create empty stack
-        s = stack()
+        s = Stack()
         # push the starting vertex_id to the stack
         s.push(starting_vertex)
         # create an empty set to store visited nodes
@@ -167,7 +167,7 @@ class Graph:
                 visited.add(last_vertex)
                 # then push paths to all neighbors to the top
                 for neighbor in self.get_neighbors(last_vertex):
-                    p_copy = p.p_copy()
+                    p_copy = p.copy()
                     p_copy.append(neighbor)
                     s.push(p_copy)
 
@@ -185,13 +185,12 @@ class Graph:
         if starting_vertex == destination_vertex:
             # if so, return as list
             return [starting_vertex]
-        # check if start vertex is visited
-        # if not,
-        if starting_vertex not in visited:
-            # mark as visited
-            visited.add(starting_vertex)
-            # call self on neighbors
-            for neighbor in self.get_neighbors(starting_vertex):
+        # mark as visited
+        visited.add(starting_vertex)
+        # call self on neighbors
+        for neighbor in self.get_neighbors(starting_vertex):
+            # check if neighbor is not visited
+            if neighbor not in visited:
                 path = self.dfs_recursive(neighbor, destination_vertex, visited)
                 if path is not None:
                     return [starting_vertex] + path
